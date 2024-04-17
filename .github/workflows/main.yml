@@ -26,3 +26,4 @@ jobs:
         with:
           http_url: https://www2.myfloridalicense.com/sto/file_download/extracts/bd400lic.csv # The data to fetch every 5 minutes
           downloaded_filename: data.csv # The http_url gets saved and renamed in our repository as btc-price.json
+          postprocess: postprocess.ts
