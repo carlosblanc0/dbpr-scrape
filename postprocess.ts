@@ -42,5 +42,7 @@ const columnHeaders = [
 
 // Write the modified CSV data back to a new file with column headers
 const newfile = `fixed_${filename}`;
+console.log("Writing modified CSV data to file...");
+console.log([columnHeaders, ...originalCSV]); // Log the data structure before writing
 await writeCSV(newfile, [columnHeaders, ...originalCSV]);
 console.log(`Modified CSV data written to ${newfile}`);
