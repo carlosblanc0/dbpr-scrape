@@ -41,8 +41,10 @@ const columnHeaders = [
 
 // Write the modified CSV data back to a new file
 const newfile = `fixed_${filename}`;
-const writer = await new CSVWriter(newfile);
-await writer.writeRow(columnHeaders); // Write column headers
+const writer = new CSVWriter(newfile);
+
+// Write column headers
+await writer.writeRow(columnHeaders);
 
 // Iterate through each row of the CSV and write it to the new file
 for await (const row of reader) {
