@@ -35,7 +35,7 @@ const columnHeaders = [
 ];
 
 // Prepend column headers to the data
-const newData = [columnHeaders, ...data];
+const newData = [columnHeaders, ...data.map(row => row.map(cell => String(cell)))];
 
 // Write the modified CSV data back to the file
 const newfile = `fixed_${filename}`;
