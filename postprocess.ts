@@ -1,10 +1,14 @@
-import { CSVReader, CSVWriter } from 'https://deno.land/x/csv/mod.ts';
+import { readCSV, writeCSV } from 'https://deno.land/x/flat@0.0.15/mod.ts';
 
 // The filename is the first invocation argument
 const filename = Deno.args[0]; // Same name as downloaded_filename
 
-// Read the CSV file
-const reader = await new CSVReader(filename);
+// Path to a csv file
+const csvPath = filename;
+
+// Parse the CSV file
+const originalCSV = await readCSV(csvPath);
+console.log(originalCSV);
 
 // Define column headers based on the provided names
 const columnHeaders = [
@@ -33,24 +37,10 @@ const columnHeaders = [
     "License Secondary Status Code",
     "Original Issue Date",
     "Effective Date",
-    "Expiration Date",
-    "Test0",
-    "Test1",
-    "Test2"
+    "Expiration Date"
 ];
 
-// Write the modified CSV data back to a new file
+// Write the modified CSV data back to a new file with column headers
 const newfile = `fixed_${filename}`;
-const writer = new CSVWriter(newfile);
-
-// Write column headers
-await writer.writeRow(columnHeaders);
-
-// Iterate through each row of the CSV and write it to the new file
-for await (const row of reader) {
-    await writer.writeRow(row);
-}
-
-// Close the reader and writer
-reader.close();
-writer.close();
+await writeCSV(newfile, [columnHeaders, ...originalCSV]);
+console.log(`Modified CSV data written to ${newfile}`);
