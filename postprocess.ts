@@ -31,7 +31,10 @@ const columnHeaders = [
     "License Secondary Status Code",
     "Original Issue Date",
     "Effective Date",
-    "Expiration Date"
+    "Expiration Date",
+    "Test0",
+    "Test1",
+    "Test2"
 ];
 
 // Prepend column headers to the data
