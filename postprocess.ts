@@ -1,21 +1,19 @@
-import { readCSV, writeCSV } from 'https://deno.land/x/flat@0.0.15/mod.ts';
+// Is this the cause of the failures ?
+// import 'https://deno.land/x/flat@0.0.10/mod.ts'
 
-// The filename is the first invocation argument
-const filename = Deno.args[0]; // Same name as downloaded_filename
 
-// Path to a csv file
-const csvPath = 'data.csv';
+// install requirements with pip
+const pip_install = Deno.run({
+    cmd: ['python', '-m', 'pip', 'install', '-r', 'requirements.txt'],
+});
 
-const originalCSV = await readCSV(csvPath);
-console.log(originalCSV);
+await pip_install.status();
 
-// Generate column headers based on the number of columns in the CSV data
-const numColumns = originalCSV[0].length;
-const columnHeaders = Array.from({ length: numColumns }, (_, index) => `Column ${index + 1}`);
 
-// Write the original CSV data to a new file with generated column headers
-await writeCSV('data.csv', [columnHeaders, ...originalCSV]);
 
-// Parse the newly written CSV file with headers
-const parsedCSVWithHeaders = await readCSV('data.csv');
-console.log(parsedCSVWithHeaders);
+// Forwards the execution to the python script
+const py_run = Deno.run({
+    cmd: ['python', './postprocessing.py'].concat(Deno.args),
+});
+
+await py_run.status();
