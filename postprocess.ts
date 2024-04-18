@@ -4,45 +4,18 @@ import { readCSV, writeCSV } from 'https://deno.land/x/flat@0.0.15/mod.ts';
 const filename = Deno.args[0]; // Same name as downloaded_filename
 
 // Path to a csv file
-const csvPath = filename;
+const csvPath = './dbpr-scrape/data.csv';
 
-// Parse the CSV file
 const originalCSV = await readCSV(csvPath);
 console.log(originalCSV);
 
-// Define column headers based on the provided names
-const columnHeaders = [
-    "Board",
-    "Profession",
-    "Owner/Primary Name",
-    "Series/Rank",
-    "Class Modifier",
-    "Mailing Street Address",
-    "Mailing Address Line 2",
-    "Mailing Address Line 3",
-    "Mailing City",
-    "Mailing State",
-    "Mailing Zip Code",
-    "Mailing County Code",
-    "Business or DBA Name",
-    "Location Street Address",
-    "Location Address 2",
-    "Location Address 3",
-    "Location City",
-    "Location State",
-    "Location Zip Code",
-    "Location County Code",
-    "License Number",
-    "License Primary Status Code",
-    "License Secondary Status Code",
-    "Original Issue Date",
-    "Effective Date",
-    "Expiration Date"
-];
+// Generate column headers based on the number of columns in the CSV data
+const numColumns = originalCSV[0].length;
+const columnHeaders = Array.from({ length: numColumns }, (_, index) => `Column ${index + 1}`);
 
-// Write the modified CSV data back to a new file with column headers
-const newfile = `fixed_${filename}`;
-console.log("Writing modified CSV data to file...");
-console.log([columnHeaders, ...originalCSV]); // Log the data structure before writing
-await writeCSV(newfile, [columnHeaders, ...originalCSV]);
-console.log(`Modified CSV data written to ${newfile}`);
+// Write the original CSV data to a new file with generated column headers
+await writeCSV('./examples/csv/prices-with-headers.csv', [columnHeaders, ...originalCSV]);
+
+// Parse the newly written CSV file with headers
+const parsedCSVWithHeaders = await readCSV('./examples/csv/prices-with-headers.csv');
+console.log(parsedCSVWithHeaders);
