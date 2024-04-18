@@ -17,5 +17,5 @@ const columnHeaders = Array.from({ length: numColumns }, (_, index) => `Column $
 await writeCSV('data.csv', [columnHeaders, ...originalCSV]);
 
 // Parse the newly written CSV file with headers
-const parsedCSVWithHeaders = await readCSV('./examples/csv/prices-with-headers.csv');
+const parsedCSVWithHeaders = await readCSV('data.csv');
 console.log(parsedCSVWithHeaders);
