@@ -4,7 +4,7 @@ import { readCSV, writeCSV } from 'https://deno.land/x/flat@0.0.15/mod.ts';
 const filename = Deno.args[0]; // Same name as downloaded_filename
 
 // Path to a csv file
-const csvPath = './dbpr-scrape/data.csv';
+const csvPath = 'data.csv';
 
 const originalCSV = await readCSV(csvPath);
 console.log(originalCSV);
